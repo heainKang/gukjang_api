@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>국장지수 알람 서비스</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <!-- Tailwind CSS CDN (즉시 작동) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 추가 스타일 설정 -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter var', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Rails JavaScript -->
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-50">
+    <!-- 네비게이션 바 -->
+    <nav class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl backdrop-blur-lg">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-20">
+          <div class="flex items-center">
+            <%= link_to root_path, class: "flex items-center space-x-3 group" do %>
+              <div class="w-12 h-12 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                <span class="text-2xl">🚀</span>
+              </div>
+              <div>
+                <h1 class="text-xl font-bold text-white">국장지수 알람</h1>
+                <p class="text-xs text-purple-100">실시간 주식 모니터링</p>
+              </div>
+            <% end %>
+          </div>
+          <div class="flex items-center space-x-2">
+            <%= link_to web_dashboard_path, 
+                class: "text-white hover:bg-white hover:bg-opacity-20 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 backdrop-blur-lg flex items-center space-x-2" do %>
+              <span>📊</span>
+              <span>대시보드</span>
+            <% end %>
+            <%= link_to web_alerts_path, 
+                class: "text-white hover:bg-white hover:bg-opacity-20 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 backdrop-blur-lg flex items-center space-x-2" do %>
+              <span>🔔</span>
+              <span>알람 관리</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="max-w-7xl mx-auto py-6 px-4">
+      <% if notice %>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 flex items-center">
+          <span class="mr-2">✅</span>
+          <%= notice %>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 flex items-center">
+          <span class="mr-2">⚠️</span>
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

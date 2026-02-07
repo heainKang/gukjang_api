@@ -1,0 +1,74 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold text-gray-900">알람 관리</h1>
+  <%= link_to "새 알람 생성", "/web/alerts/new", 
+      class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+</div>
+
+<% if @alerts&.any? %>
+  <div class="bg-white shadow overflow-hidden sm:rounded-md">
+    <ul class="divide-y divide-gray-200">
+      <% @alerts.each do |alert| %>
+        <li>
+          <div class="px-4 py-4 sm:px-6">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <% if alert['is_active'] %>
+                    <div class="h-8 w-8 bg-green-500 rounded-full flex items-center justify-center">
+                      <span class="text-white text-sm font-bold">🔔</span>
+                    </div>
+                  <% else %>
+                    <div class="h-8 w-8 bg-gray-400 rounded-full flex items-center justify-center">
+                      <span class="text-white text-sm font-bold">🔕</span>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="ml-4">
+                  <div class="flex items-center">
+                    <div class="text-sm font-medium text-gray-900">
+                      <%= alert['name'] %>
+                    </div>
+                    <div class="ml-2">
+                      <% if alert['is_active'] %>
+                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                          활성
+                        </span>
+                      <% else %>
+                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                          비활성
+                        </span>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <%= alert['index_name'] %> | 
+                    <%= alert['condition'] == 'above' ? '이상' : '이하' %> 
+                    <%= number_with_delimiter(alert['threshold_value']) %>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <%= link_to "수정", edit_web_alert_path(alert['id']), 
+                    class: "text-blue-600 hover:text-blue-900 text-sm font-medium" %>
+                <%= link_to "삭제", web_alert_path(alert['id']), 
+                    method: :delete,
+                    data: { confirm: "정말로 삭제하시겠습니까?" },
+                    class: "text-red-600 hover:text-red-900 text-sm font-medium" %>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="text-center py-12">
+    <div class="mx-auto h-24 w-24 text-gray-400 mb-4">
+      <span class="text-6xl">🔔</span>
+    </div>
+    <h3 class="text-sm font-medium text-gray-900 mb-1">알람이 없습니다</h3>
+    <p class="text-sm text-gray-500 mb-6">첫 번째 가격 알람을 생성해보세요.</p>
+    <%= link_to "새 알람 생성", "/web/alerts/new",
+        class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+  </div>
+<% end %>

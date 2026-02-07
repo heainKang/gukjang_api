@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_identifier: MyString
+  index_name: MyString
+  threshold_value: 9.99
+  comparison_type: MyString
+  is_active: false
+  fcm_token: MyText
+
+two:
+  user_identifier: MyString
+  index_name: MyString
+  threshold_value: 9.99
+  comparison_type: MyString
+  is_active: false
+  fcm_token: MyText

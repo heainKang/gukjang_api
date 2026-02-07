@@ -1,0 +1,109 @@
+
+<div class="card-grid">
+  <!-- 통계 카드들 -->
+  <div class="stat-card blue">
+    <div class="stat-card-content">
+      <div class="stat-icon">
+        <span>📊</span>
+      </div>
+      <div class="stat-info">
+        <h3>전체 알람</h3>
+        <div class="stat-value"><%= @total_alerts %></div>
+      </div>
+    </div>
+    <div class="stat-description">
+      <p>설정된 모든 알람</p>
+    </div>
+  </div>
+
+  <div class="stat-card green">
+    <div class="stat-card-content">
+      <div class="stat-icon">
+        <span>🔔</span>
+      </div>
+      <div class="stat-info">
+        <h3>활성 알람</h3>
+        <div class="stat-value"><%= @active_alerts %></div>
+      </div>
+    </div>
+    <div class="stat-description">
+      <p>현재 활성화된 알람</p>
+    </div>
+  </div>
+
+  <div class="stat-card purple">
+    <div class="stat-card-content">
+      <div class="stat-icon">
+        <span>📈</span>
+      </div>
+      <div class="stat-info">
+        <h3>모니터링 지수</h3>
+        <div class="stat-value"><%= @indices.count %></div>
+      </div>
+    </div>
+    <div class="stat-description">
+      <p>추적 중인 지수</p>
+    </div>
+  </div>
+</div>
+
+<!-- 지수 현황 -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-title">
+      <div class="section-icon">
+        <span>📈</span>
+      </div>
+      <h2>실시간 지수 현황</h2>
+      <span class="live-badge">LIVE</span>
+    </div>
+  </div>
+  <div class="index-grid">
+    <% @indices.each do |index| %>
+      <div class="index-card">
+        <div class="index-header">
+          <h4 class="index-name"><%= index[:name] %></h4>
+          <div class="live-indicator">
+            <span class="live-dot"></span>
+            <span class="live-text">실시간</span>
+          </div>
+        </div>
+        <div class="index-value"><%= number_with_delimiter(index[:value]) %></div>
+        <div>
+          <span class="index-change <%= index[:change].starts_with?('+') ? 'positive' : 'negative' %>">
+            <%= index[:change] %> (<%= index[:change_percent] %>)
+          </span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- 빠른 액션 -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-title">
+      <div class="section-icon">
+        <span>⚡</span>
+      </div>
+      <h2>빠른 작업</h2>
+    </div>
+  </div>
+  <div class="action-grid">
+    <%= link_to web_alerts_path, class: "action-card blue" do %>
+      <div class="action-icon">
+        <span>🔔</span>
+      </div>
+      <h4 class="action-title">알람 관리</h4>
+      <p class="action-description">기존 알람들을 확인하고 관리하세요</p>
+    <% end %>
+
+    <%= link_to "/web/alerts/new", class: "action-card green" do %>
+      <div class="action-icon">
+        <span>➕</span>
+      </div>
+      <h4 class="action-title">새 알람 생성</h4>
+      <p class="action-description">새로운 주식 가격 알람을 설정하세요</p>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  symbol: MyString
+  current_value: 9.99
+  last_updated: 2025-11-27 18:39:57
+  source: MyString
+
+two:
+  name: MyString
+  symbol: MyString
+  current_value: 9.99
+  last_updated: 2025-11-27 18:39:57
+  source: MyString
