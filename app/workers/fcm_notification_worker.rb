@@ -9,8 +9,13 @@ class FcmNotificationWorker
     Rails.logger.info "FCM 푸시 알림 발송 시작: #{fcm_token[0..20]}..."
     
     begin
-      # FCM 서비스 인스턴스 생성
-      fcm_client = FCM.new(Rails.application.credentials.fcm_server_key)
+      # FCM 서비스 인스턴스 생성 (환경변수 또는 파일에서 credentials 로드)
+      credentials = if ENV['FIREBASE_CREDENTIALS_JSON']
+        JSON.parse(Base64.decode64(ENV['FIREBASE_CREDENTIALS_JSON']))
+      else
+        Rails.root.join('config', 'gukjang-api-firebase-adminsdk-fbsvc-5bb331fd55.json').to_s
+      end
+      fcm_client = FCM.new(credentials)
       
       # 푸시 알림 옵션 설정
       notification_options = {

@@ -33,3 +33,5 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+config/gukjang-api-firebase-adminsdk-fbsvc-5bb331fd55.json
+config/firebase-credentials.json

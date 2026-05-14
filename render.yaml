@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: gukjang-api
+    runtime: ruby
+    buildCommand: bundle install && bundle exec rails assets:precompile && bundle exec rails db:migrate
+    startCommand: bundle exec rails server -p $PORT
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: FIREBASE_CREDENTIALS_JSON
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gukjang-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: gukjang-redis
+          type: redis
+          property: connectionString
+
+  - type: worker
+    name: gukjang-sidekiq
+    runtime: ruby
+    buildCommand: bundle install
+    startCommand: bundle exec sidekiq
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: FIREBASE_CREDENTIALS_JSON
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gukjang-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: gukjang-redis
+          type: redis
+          property: connectionString
+
+databases:
+  - name: gukjang-db
+    plan: free
+
+  - name: gukjang-redis
+    plan: free
+    ipAllowList: []
