@@ -46,7 +46,7 @@ gem "rack-cors"
 gem "redis", "~> 5.0"
 
 # 백그라운드 작업을 위한 Sidekiq
-gem "sidekiq", "~> 8.0"
+gem "sidekiq", "~> 8.1"
 
 # HTTP 요청을 위한 HTTParty (Yahoo Finance API 호출용)
 gem "httparty"
